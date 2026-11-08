@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponchadora de Impacto | Herramientas de Campo de Cableado Estructurado</title>
+<meta name="description" content="Presentación de la ponchadora de impacto (punch down tool): qué es, partes, tipos, uso paso a paso y referencias.">
+<style>
+  :root{
+    --bg:#0e1420;
+    --bg-2:#141c2c;
+    --card:#1a2336;
+    --line:#26324a;
+    --text:#e8edf6;
+    --muted:#9aa7bf;
+    --accent:#ff7a1a;
+    --accent-2:#ffb066;
+    --ok:#3ddc97;
+    --radius:16px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+  }
+  img{max-width:100%;display:block}
+  a{color:var(--accent-2)}
+  .container{width:min(1100px,92%);margin-inline:auto}
+  section{padding:84px 0}
+  section.alt{background:var(--bg-2)}
+  h1,h2,h3{line-height:1.2}
+  h2{font-size:clamp(1.6rem,3.2vw,2.2rem);margin-bottom:10px}
+  .eyebrow{
+    display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:10px
+  }
+  .lead{color:var(--muted);max-width:720px;margin-bottom:36px}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    background:rgba(14,20,32,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .container{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-weight:800;letter-spacing:.02em;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px}
+  .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .nav ul{display:flex;gap:22px;list-style:none}
+  .nav ul a{color:var(--muted);text-decoration:none;font-size:.92rem;padding:6px 2px;border-bottom:2px solid transparent;transition:.2s}
+  .nav ul a:hover,.nav ul a.active{color:var(--text);border-color:var(--accent)}
+  .burger{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:8px 12px;font-size:1rem;cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:150px;padding-bottom:90px;
+    background:
+      radial-gradient(900px 420px at 85% 0%,rgba(255,122,26,.18),transparent 60%),
+      radial-gradient(700px 400px at 0% 100%,rgba(61,220,151,.08),transparent 60%),
+      var(--bg);
+  }
+  .hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.4rem);margin-bottom:16px}
+  .hero h1 span{color:var(--accent)}
+  .hero p{color:var(--muted);font-size:1.08rem;margin-bottom:28px;max-width:560px}
+  .btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:13px 24px;border-radius:999px;text-decoration:none;font-weight:700;
+    transition:transform .2s,box-shadow .2s,background .2s;border:1px solid transparent
+  }
+  .btn.primary{background:var(--accent);color:#1b1004}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,122,26,.4)}
+  .btn.ghost{border-color:var(--line);color:var(--text)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent-2)}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .chip{background:var(--card);border:1px solid var(--line);color:var(--muted);padding:6px 14px;border-radius:999px;font-size:.82rem}
+
+  /* ---------- ESPACIOS PARA IMÁGENES ----------
+     Para usar una imagen: en el <img> de cada .img-slot pon la ruta en src,
+     por ejemplo src="imagenes/ponchadora.jpg". Se ajusta sola al recuadro. */
+  .img-slot{
+    position:relative;overflow:hidden;border-radius:var(--radius);
+    border:2px dashed var(--line);background:linear-gradient(145deg,var(--card),#121a2a);
+    box-shadow:var(--shadow);
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .img-slot.wide{aspect-ratio:16/9}
+  .img-slot.square{aspect-ratio:1/1}
+  .img-slot .ph{
+    text-align:center;color:var(--muted);font-size:.9rem;padding:16px;pointer-events:none
+  }
+  .img-slot .ph svg{width:44px;height:44px;margin:0 auto 8px;opacity:.7;display:block}
+  .img-slot .ph b{display:block;color:var(--text);margin-bottom:2px}
+  .img-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+  .img-slot.has-img{border-style:solid;border-color:var(--line)}
+  .img-slot.has-img img{display:block}
+  .img-slot.has-img .ph{display:none}
+  figcaption{margin-top:8px;font-size:.82rem;color:var(--muted);text-align:center}
+
+  /* ---------- QUÉ ES ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+  .stat strong{display:block;font-size:1.5rem;color:var(--accent)}
+  .stat span{font-size:.8rem;color:var(--muted)}
+
+  /* ---------- CARDS ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+    transition:transform .25s,border-color .25s,box-shadow .25s
+  }
+  .card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:var(--shadow)}
+  .card .ico{
+    width:46px;height:46px;border-radius:12px;background:rgba(255,122,26,.14);
+    display:grid;place-items:center;font-size:1.4rem;margin-bottom:14px
+  }
+  .card h3{font-size:1.1rem;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.94rem}
+
+  /* ---------- TABS ---------- */
+  .tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+  .tab{
+    background:var(--card);border:1px solid var(--line);color:var(--muted);
+    padding:10px 20px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.92rem;transition:.2s
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--accent);color:#1b1004;border-color:var(--accent)}
+  .panel{display:none;animation:fade .35s ease}
+  .panel.active{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .panel ul{list-style:none;margin-top:14px}
+  .panel li{padding:8px 0 8px 28px;position:relative;color:var(--muted)}
+  .panel li::before{content:"✔";position:absolute;left:0;color:var(--ok)}
+  .panel li.no::before{content:"✖";color:#ff6b6b}
+
+  /* ---------- PASOS ---------- */
+  .steps{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+  .step-list{display:flex;flex-direction:column;gap:12px}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    transition:border-color .2s
+  }
+  .step.open{border-color:var(--accent)}
+  .step button{
+    width:100%;background:none;border:none;color:var(--text);text-align:left;cursor:pointer;
+    padding:16px 18px;display:flex;align-items:center;gap:14px;font-size:1rem;font-weight:600
+  }
+  .step .num{
+    flex:none;width:34px;height:34px;border-radius:50%;background:rgba(255,122,26,.15);color:var(--accent);
+    display:grid;place-items:center;font-weight:800
+  }
+  .step.open .num{background:var(--accent);color:#1b1004}
+  .step .body{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 18px 0 66px;color:var(--muted);font-size:.94rem}
+  .step.open .body{padding-bottom:16px}
+  .progress{height:6px;background:var(--line);border-radius:99px;margin-bottom:18px;overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .35s}
+
+  /* ---------- TABLA ---------- */
+  .table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;min-width:640px;background:var(--card)}
+  th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.93rem}
+  th{background:#101829;color:var(--accent-2);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em}
+  tr:last-child td{border-bottom:none}
+  td:first-child{font-weight:700}
+  td{color:var(--muted)}
+
+  /* ---------- NOTA ---------- */
+  .note{
+    margin-top:26px;background:rgba(255,122,26,.08);border-left:4px solid var(--accent);
+    padding:16px 20px;border-radius:10px;color:var(--muted);font-size:.93rem
+  }
+  .note b{color:var(--text)}
+
+  /* ---------- GALERÍA ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+  /* ---------- REFERENCIAS ---------- */
+  .refs ol{margin-left:22px;display:grid;gap:14px}
+  .refs li{color:var(--muted);font-size:.94rem}
+  .refs li b{color:var(--text)}
+  .refs li a{word-break:break-all}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#090e18;border-top:1px solid var(--line);padding:40px 0;text-align:center}
+  footer p{color:var(--muted);max-width:720px;margin:0 auto 10px;font-size:.92rem}
+  footer .author{color:var(--text);font-weight:700}
+  footer .author span{color:var(--accent)}
+
+  /* ---------- UTIL ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.show{opacity:1;transform:none}
+  #toTop{
+    position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#1b1004;border:none;font-size:1.3rem;font-weight:800;cursor:pointer;
+    opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow)
+  }
+  #toTop.visible{opacity:1;pointer-events:auto}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:880px){
+    .hero .grid,.two,.steps,.panel.active{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .burger{display:block}
+    .nav ul{
+      position:absolute;top:64px;left:0;right:0;background:var(--bg-2);flex-direction:column;
+      padding:18px 6%;gap:14px;border-bottom:1px solid var(--line);display:none
+    }
+    .nav ul.open{display:flex}
+    section{padding:64px 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="container">
+    <a href="#inicio" class="brand"><span class="dot"></span>Ponchadora de Impacto</a>
+    <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+    <ul id="menu">
+      <li><a href="#inicio" class="active">Inicio</a></li>
+      <li><a href="#que-es">¿Qué es?</a></li>
+      <li><a href="#partes">Partes</a></li>
+      <li><a href="#tipos">Tipos</a></li>
+      <li><a href="#uso">Cómo se usa</a></li>
+      <li><a href="#compatibilidad">Compatibilidad</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="container grid">
+    <div>
+      <span class="eyebrow">Herramientas de campo · Cableado estructurado</span>
+      <h1>La <span>ponchadora de impacto</span>: terminaciones limpias y consistentes</h1>
+      <p>Herramienta que inserta el cable en los conectores de desplazamiento de aislante (IDC) y corta el sobrante en un solo golpe. Imprescindible en patch panels, bloques 110/66 y keystone jacks.</p>
+      <div class="btns">
+        <a href="#uso" class="btn primary">Ver cómo se usa</a>
+        <a href="#referencias" class="btn ghost">Ver referencias</a>
+      </div>
+      <div class="chips">
+        <span class="chip">Patch panels</span>
+        <span class="chip">Bloques 110 / 66</span>
+        <span class="chip">Keystone jacks</span>
+        <span class="chip">Cat5e · Cat6 · Cat6A</span>
+      </div>
+    </div>
+
+    <figure>
+      <div class="img-slot">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+          <b>Imagen principal</b>Coloca aquí la foto de la ponchadora
+        </div>
+        <!-- Pon la ruta de tu imagen en src, ej: src="imagenes/ponchadora.jpg" -->
+        <img src="https://media.kleintools.io/images/original/klein/vdv427300_app1.jpg" alt="Ponchadora de impacto">
+      </div>
+      <figcaption>Ponchadora de impacto con cuchilla 110/66</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= QUÉ ES ================= -->
+<section id="que-es">
+  <div class="container two">
+    <div class="reveal">
+      <span class="eyebrow">Definición</span>
+      <h2>¿Qué es una ponchadora de impacto?</h2>
+      <p class="lead" style="margin-bottom:14px">También llamada <em>punch down tool</em> o impactadora. Se usa para terminar cables de par trenzado (UTP/FTP) en paneles de parcheo, bloques de distribución y rosetas.</p>
+      <p style="color:var(--muted)">Su mecanismo de resorte libera el golpe a una fuerza preestablecida, de modo que cada terminación queda con la misma presión sin depender de la mano del técnico. Además, la cuchilla corta el excedente del cable al mismo tiempo que lo inserta.</p>
+      <div class="stats">
+        <div class="stat"><strong>1 paso</strong><span>Termina y corta</span></div>
+        <div class="stat"><strong>Resorte</strong><span>Fuerza constante</span></div>
+        <div class="stat"><strong>IDC</strong><span>Conector de destino</span></div>
+      </div>
+    </div>
+    <figure class="reveal">
+      <div class="img-slot">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+          <b>Imagen 2</b>Ponchadora en uso sobre un patch panel
+        </div>
+        <img src="https://http2.mlstatic.com/D_NQ_NP_875800-MLA103610639014_012026-O.webp" alt="Ponchadora de impacto en uso">
+      </div>
+      <figcaption>Ponchadora terminando un cable en un patch panel</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= PARTES ================= -->
+<section class="alt" id="partes">
+  <div class="container">
+    <span class="eyebrow">Anatomía</span>
+    <h2>Partes principales</h2>
+    <p class="lead">Aunque cambian según la marca y el modelo, la mayoría de las ponchadoras de impacto comparten estos elementos.</p>
+    <div class="cards">
+      <div class="card reveal"><div class="ico">🔪</div><h3>Cuchilla intercambiable</h3><p>Termina y corta. Las configuraciones más comunes son 110 y 66 (a veces una en cada extremo). Se reemplaza cuando pierde filo.</p></div>
+      <div class="card reveal"><div class="ico">🌀</div><h3>Mecanismo de resorte</h3><p>Acumula energía y la libera al alcanzar una fuerza preestablecida, logrando un golpe uniforme.</p></div>
+      <div class="card reveal"><div class="ico">🎚️</div><h3>Ajuste de impacto</h3><p>Algunos modelos permiten alta y baja fuerza, según el calibre del conductor (por ejemplo, baja para 24/26 AWG y alta para 22 AWG).</p></div>
+      <div class="card reveal"><div class="ico">✋</div><h3>Mango acojinado</h3><p>Reduce el retroceso del golpe y la fatiga de la mano en trabajos con muchas terminaciones.</p></div>
+    </div>
+    <div class="note"><b>Accesorios habituales:</b> algunos kits incluyen lapicero de prueba, recolector de alambres (para retirar los restos cortados) y mango de alcance extendido para llegar a puertos apretados.</div>
+  </div>
+</section>
+
+<!-- ================= TIPOS ================= -->
+<section id="tipos">
+  <div class="container">
+    <span class="eyebrow">Comparativa</span>
+    <h2>Impacto vs. no impacto</h2>
+    <p class="lead">Elegir el tipo correcto afecta la calidad de la terminación y el tiempo de trabajo.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-target="p-impacto" role="tab">Con impacto</button>
+      <button class="tab" data-target="p-noimpacto" role="tab">Sin impacto (manual)</button>
+    </div>
+
+    <div class="panel active" id="p-impacto">
+      <div>
+        <h3>Herramienta de impacto</h3>
+        <p style="color:var(--muted);margin-top:6px">Usa un resorte: se presiona sobre el IDC hasta que el mecanismo se libera con la fuerza programada.</p>
+        <ul>
+          <li>Fuerza uniforme en cada puerto</li>
+          <li>Ideal para patch panels y volumen alto de terminaciones</li>
+          <li>Reduce el retrabajo y ahorra tiempo</li>
+          <li class="no">Más costosa que una manual</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="img-slot wide">
+          <div class="ph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+            <b>Imagen 3</b>Ponchadora de impacto
+          </div>
+          <img src="https://i.postimg.cc/K83BxMr9/d92b7459-be50-4e13-97f7-dada5a494569.png" alt="Ponchadora de impacto">
+        </div>
+      </figure>
+    </div>
+
+    <div class="panel" id="p-noimpacto">
+      <div>
+        <h3>Herramienta sin impacto</h3>
+        <p style="color:var(--muted);margin-top:6px">Depende de la presión de la mano, que varía de un puerto a otro y entre técnicos.</p>
+        <ul>
+          <li>Económica y sencilla</li>
+          <li>Suficiente para uso ocasional o pocas terminaciones</li>
+          <li class="no">Presión irregular según quien la use</li>
+          <li class="no">Menos eficiente en instalaciones grandes</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="img-slot wide">
+          <div class="ph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+            <b>Imagen 4</b>Ponchadora manual (sin impacto)
+          </div>
+          <img src="" alt="Ponchadora sin impacto">
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= USO ================= -->
+<section class="alt" id="uso">
+  <div class="container steps">
+    <div>
+      <span class="eyebrow">Paso a paso</span>
+      <h2>Cómo se usa</h2>
+      <p class="lead">Buenas prácticas generales de terminación. Haz clic en cada paso para ver el detalle.</p>
+      <div class="progress"><i id="bar"></i></div>
+      <div class="step-list" id="stepList">
+        <div class="step">
+          <button><span class="num">1</span>Prepara el cable</button>
+          <div class="body">Retira la chaqueta con un pelacables sin dañar los pares internos. Deja solo la longitud necesaria para llegar al conector.</div>
+        </div>
+        <div class="step">
+          <button><span class="num">2</span>Ordena los pares</button>
+          <div class="body">Mantén el trenzado lo más cerca posible del punto de terminación y sigue el código de colores impreso en el jack, panel o bloque (T568A o T568B).</div>
+        </div>
+        <div class="step">
+          <button><span class="num">3</span>Coloca los hilos en su ranura</button>
+          <div class="body">Asienta cada conductor en su posición del IDC sin forzarlo, respetando el orden de colores de todo el enlace.</div>
+        </div>
+        <div class="step">
+          <button><span class="num">4</span>Posiciona la herramienta</button>
+          <div class="body">Apoya la ponchadora perpendicular al conector, con la cuchilla de corte orientada hacia el lado donde queda el sobrante. Verifica que use la cuchilla correcta (110 o 66).</div>
+        </div>
+        <div class="step">
+          <button><span class="num">5</span>Presiona hasta el impacto</button>
+          <div class="body">Empuja con firmeza hasta que el resorte se libere. El conductor queda insertado en el IDC y el excedente se corta en la misma acción.</div>
+        </div>
+        <div class="step">
+          <button><span class="num">6</span>Verifica con un probador</button>
+          <div class="body">Comprueba continuidad y mapa de cableado con un probador. En instalaciones nuevas, la certificación confirma que el enlace cumple el estándar (TIA/ISO).</div>
+        </div>
+      </div>
+    </div>
+    <figure style="position:sticky;top:90px">
+      <div class="img-slot square">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+          <b>Imagen 5</b>Cable ponchado en un keystone o bloque
+        </div>
+        <img src="https://i.postimg.cc/3RXz6Ncw/0cb9bc77-8343-44f3-919a-53f27a48c856.png" alt="Cable terminado en un conector IDC">
+      </div>
+      <figcaption>Resultado de una terminación correcta</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= COMPATIBILIDAD ================= -->
+<section id="compatibilidad">
+  <div class="container">
+    <span class="eyebrow">Qué conecta</span>
+    <h2>Compatibilidad y aplicaciones</h2>
+    <p class="lead">Los formatos de cuchilla más comunes son 110, Krone, 66 y BIX; los más usados en redes de datos son 110 y Krone.</p>
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Elemento</th><th>Uso con la ponchadora</th><th>Notas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Patch panel</td><td>Terminación del cableado horizontal en el rack</td><td>Caso típico de volumen alto: conviene herramienta de impacto</td></tr>
+          <tr><td>Keystone jack</td><td>Terminación de cada salida de usuario</td><td>Con cuchilla 110, siguiendo el código de color del jack</td></tr>
+          <tr><td>Bloque 110</td><td>Distribución de voz y datos</td><td>Estándar muy usado en cableado estructurado</td></tr>
+          <tr><td>Bloque 66</td><td>Telefonía y sistemas heredados</td><td>Extremo de la cuchilla en configuración 66</td></tr>
+          <tr><td>Categorías de cable</td><td>Cat3, Cat5e, Cat6 y Cat6A</td><td>Según el modelo, se termina y corta en un solo paso</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><b>Complemento clave:</b> la ponchadora de impacto no reemplaza al <b>crimper RJ45</b> (que arma conectores en el extremo del cable) ni al <b>probador o certificador</b> (que valida el resultado). Cada herramienta cumple una función distinta dentro del kit de campo.</div>
+  </div>
+</section>
+
+<!-- ================= GALERÍA ================= -->
+<section class="alt" id="galeria">
+  <div class="container">
+    <span class="eyebrow">Imágenes</span>
+    <h2>Galería</h2>
+    <p class="lead">Espacios listos para tus fotos. Solo agrega la ruta en el atributo <code>src</code> de cada imagen.</p>
+    <div class="gallery">
+      <figure class="reveal">
+        <div class="img-slot">
+          <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><b>Imagen 6</b>Cuchillas 110 y 66</div>
+          <img src="https://i.postimg.cc/Yq9yNdM9/8024ad1c-5d07-450f-8980-3518bce6e7b3.png" alt="Cuchillas 110 y 66">
+        </div>
+        <figcaption>Cuchillas 110 y 66</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="img-slot">
+          <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><b>Imagen 7</b>Patch panel terminado</div>
+          <img src="https://i.postimg.cc/xTCFG6nq/a161ef1c-bae4-426f-9d86-127e8b505776.png" alt="Patch panel terminado">
+        </div>
+        <figcaption>Patch panel terminado</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="img-slot">
+          <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><b>Imagen 8</b>Kit de herramientas de campo</div>
+          <img src="https://i.postimg.cc/FsRnbTNK/79dbf1c2-c26d-45cd-b75e-b3b8eabe4591.png" alt="Kit de herramientas de cableado">
+        </div>
+        <figcaption>Kit de herramientas de campo</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REFERENCIAS ================= -->
+<section id="referencias">
+  <div class="container refs">
+    <span class="eyebrow">Fuentes</span>
+    <h2>Referencias</h2>
+    <p class="lead">Fuentes consultadas para la información de esta página.</p>
+    <ol>
+      <li><b>Sparky Direct.</b> «Punch Down Tools» (tipos de herramienta de impacto y no impacto, formatos de cuchilla 110, Krone, 66 y BIX). <a href="https://www.sparkydirect.com.au/tv-data-phones/punch-down" target="_blank" rel="noopener">https://www.sparkydirect.com.au/tv-data-phones/punch-down</a></li>
+      <li><b>Syscom.</b> «3 niveles de comprobación con herramientas Fluke Networks» (certificación, calificación y verificación del cableado estructurado). <a href="https://syscom.mx/blog/3-niveles-de-comprobacion-con-herramientas-fluke-networks" target="_blank" rel="noopener">https://syscom.mx/blog/3-niveles-de-comprobacion-con-herramientas-fluke-networks</a></li>
+      <li><b>Klein Tools.</b> Hoja técnica VDV427-300, «Herramienta ponchadora de impacto con cuchilla 110/66». <a href="https://data.kleintools.com/sites/all/product_assets/documents/brochures/klein/kleintools_datasheet_es_vdv427300.pdf" target="_blank" rel="noopener">https://data.kleintools.com/.../kleintools_datasheet_es_vdv427300.pdf</a></li>
+      <li><b>Syscom.</b> Ficha del producto Klein Tools VDV427300 (termina y corta cables Cat3, Cat5e y Cat6/6A en un paso; accesorios incluidos). <a href="https://syscom.mx/products/202035" target="_blank" rel="noopener">https://syscom.mx/products/202035</a></li>
+      <li><b>Sily.</b> Ficha del producto Fluke Networks D914S (ajuste de impacto bajo/alto según calibre, mango que reduce retroceso). <a href="https://sily.mx/collections/herramientas/products/herramienta-crimpadora-de-impacto-d914s-con-cuchilla-herramienta-de-impacto-d914s-con-dos-cuchillas-eversharp-110-66" target="_blank" rel="noopener">https://sily.mx/.../herramienta-crimpadora-de-impacto-d914s...</a></li>
+      <li><b>Electrónica Embajadores.</b> «Impactadoras» (uso en redes LAN y cableado estructurado). <a href="https://www.electronicaembajadores.com/es/Subfamilias/Productos/HR91/herramienta/impactadoras" target="_blank" rel="noopener">https://www.electronicaembajadores.com/es/Subfamilias/Productos/HR91/herramienta/impactadoras</a></li>
+    </ol>
+    <div class="note"><b>Nota:</b> los pasos de uso de la sección «Cómo se usa» corresponden a buenas prácticas generales de terminación; para trabajos formales conviene contrastarlos con las normas ANSI/TIA-568 e ISO/IEC 11801 y con el manual del fabricante.</div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <p>Página informativa sobre la ponchadora de impacto como herramienta de campo en cableado estructurado: qué es, sus partes, tipos, uso y aplicaciones. Elaborada con fines académicos.</p>
+    <p class="author">Hecho por Brayan Camilo Calvo Garcia <span>-</span> Aca Cableado estructurado <span>-</span> 54469</p>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Volver arriba">↑</button>
+
+<script>
+  /* ---- Imágenes: muestra la imagen solo si tiene src válido ---- */
+  document.querySelectorAll('.img-slot').forEach(function(slot){
+    var img = slot.querySelector('img');
+    if(!img) return;
+    function ok(){ slot.classList.add('has-img'); }
+    function fail(){ slot.classList.remove('has-img'); }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', fail);
+    if(img.getAttribute('src') && img.complete && img.naturalWidth > 0){ ok(); }
+  });
+
+  /* ---- Menú móvil ---- */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('menu');
+  burger.addEventListener('click', function(){ menu.classList.toggle('open'); });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ menu.classList.remove('open'); });
+  });
+
+  /* ---- Enlace activo según la sección visible ---- */
+  var links = Array.from(menu.querySelectorAll('a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var current = 0;
+    sections.forEach(function(s,i){ if(s && s.offsetTop <= y) current = i; });
+    links.forEach(function(a,i){ a.classList.toggle('active', i === current); });
+    document.getElementById('toTop').classList.toggle('visible', window.scrollY > 500);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---- Pestañas ---- */
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+    });
+  });
+
+  /* ---- Pasos (acordeón con barra de progreso) ---- */
+  var steps = Array.from(document.querySelectorAll('#stepList .step'));
+  var bar = document.getElementById('bar');
+  steps.forEach(function(step, i){
+    step.querySelector('button').addEventListener('click', function(){
+      var wasOpen = step.classList.contains('open');
+      steps.forEach(function(s){
+        s.classList.remove('open');
+        s.querySelector('.body').style.maxHeight = null;
+      });
+      if(!wasOpen){
+        step.classList.add('open');
+        var body = step.querySelector('.body');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        bar.style.width = ((i + 1) / steps.length * 100) + '%';
+      } else {
+        bar.style.width = '0';
+      }
+    });
+  });
+
+  /* ---- Aparición al hacer scroll ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* ---- Volver arriba ---- */
+  document.getElementById('toTop').addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
